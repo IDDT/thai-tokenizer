@@ -1,0 +1,7 @@
+__pycache__/
+/temp/*
+!/temp/.keep
+!/temp/bpe_merges_*
+/build/
+/dist/
+/thai_tokenizer.egg-info/
