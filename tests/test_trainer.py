@@ -1,5 +1,4 @@
 import unittest
-from thai_tokenizer import Tokenizer
 
 
 

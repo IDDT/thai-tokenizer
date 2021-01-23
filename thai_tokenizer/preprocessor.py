@@ -2,13 +2,9 @@ import re
 
 
 
-def contains_thai(text:str) -> bool:
-    return bool(re.search(r'[\u0E00-\u0E7F]', text))
-
-def is_thai(text:str) -> bool:
-    return bool(re.match(r'^[\u0E00-\u0E7F]*$', text))
-
-def replace_thai_numbers(text:str) -> str:
+def replace_thai_digits(text:str) -> str:
+    '''Replace Thai digits for Arabic.
+    '''
     return text\
         .replace('๐', '0')\
         .replace('๑', '1')\
@@ -21,7 +17,9 @@ def replace_thai_numbers(text:str) -> str:
         .replace('๘', '8')\
         .replace('๙', '9')
 
-def split_thai_nonthai(text:str) -> str:
+def whitespace_thai(text:str) -> str:
+    '''Ensure Thai substrings are padded with whitespace.
+    '''
     text = re.sub(f"(?<![\u0E00-\u0E7F])(?=[\u0E00-\u0E7F])|"
         f"(?<=[\u0E00-\u0E7F])(?![\u0E00-\u0E7F])", " ", text)
     return text.strip()

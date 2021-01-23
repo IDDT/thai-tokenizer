@@ -13,8 +13,8 @@ pip3 install thai_tokenizer
 ## Usage
 Default set of pairs is optimized for short Thai-English product descriptions.
 ```python
-from thai_tokenizer import Tokenizer, bpe_merges
-tokenizer = Tokenizer(bpe_merges)
+from thai_tokenizer import Tokenizer
+tokenizer = Tokenizer()
 tokenizer('iPad Mini 256GB เครื่องไทย') #> 'iPad Mini 256GB เครื่อง ไทย'
 tokenizer.split('เครื่องไทย') #> ['เครื่อง', 'ไทย']
 ```

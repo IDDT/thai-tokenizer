@@ -1,12 +1,17 @@
 import re
 from .tcc import segment
+from .data import bpe_merges
 
 
 
 class Tokenizer:
-    def __init__(self, merge_pairs:list):
+    def __init__(self, pairs:list=bpe_merges):
         self.pairs = {}
-        for p, pair in enumerate(merge_pairs):
+        for p, pair in enumerate(pairs):
+            assert len(pair) == 2,\
+                'Pair should have exactly 2 tokens.'
+            assert type(pair[0]) is str and type(pair[1]) is str,\
+                'Both of the tokens in pair should be strings.'
             self.pairs[tuple(pair)] = p
 
     @staticmethod
