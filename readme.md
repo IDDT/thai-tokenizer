@@ -22,13 +22,22 @@ tokenizer.split('เครื่องไทย') #> ['เครื่อง', '
 
 
 ## Training
-It might be desirable to train own pairs to capture the specifics of the dataset at hand. Figuring out which pairs should be merged can be highly subjective. As a general guideline here are some of the pairs that original author deemed as separate:
-```
-"ส่ง" + "ฟรี" | free + delivery -> freedelivery
-"เจ้า" + "หญิง" | royal + woman = royalwoman (princess)
-"งาน" + "แท้" | real + work = realwork (genuine)
-"รอง" + "เท้า" | support + foot = supportfoot (shoe)
-```
+It might be desirable to train own pairs to capture the specifics of the dataset at hand. Figuring out which pairs should be merged can be highly subjective.
+- `"ส่ง" + "ฟรี" | free + delivery -> freedelivery`
+  - Similar meaning with merging.
+- `"กาญจนา" + "ภิเษก" | kanjana + pisek = Kanajanapisek`
+  - Merged because it is a name.
+- `"แบต" + "เตอรี่" | Batt + tery = Battery`
+  - Tinglish (Thai onomatopoeia of English word)
+- `"จักร" + "ยาน" | sewing machine + spacecraft (Bicycle)`  
+  - Meaning changes when merged.
+- `"เสื้อ" + "เชิ้ต" | shirt + shirt (button up shirt modifier)`
+  - Separate because "shirt" should be available for full text matching. The modifier will be found through bi-gram matching.
+- `"ตำ" + "นาน" | pound + long (legend)`
+  - Different meaning when merged.
+- `"ต่าง" + "หู" | different + ear (earrings)`
+  - Different meaning when merged.
+
 ```bash
 git clone thai_tokenizer
 cd thai_tokenizer
