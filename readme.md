@@ -24,19 +24,21 @@ tokenizer.split('เครื่องไทย') #> ['เครื่อง', '
 ## Training
 It might be desirable to train own pairs to capture the specifics of the dataset at hand. Figuring out which pairs should be merged can be highly subjective.
 - `"ส่ง" + "ฟรี" | free + delivery -> freedelivery`
-  - Similar meaning with merging.
+  - Separate since merging does not change the meaning of individual words.
 - `"กาญจนา" + "ภิเษก" | kanjana + pisek = Kanajanapisek`
   - Merged because it is a name.
 - `"แบต" + "เตอรี่" | Batt + tery = Battery`
-  - Tinglish (Thai onomatopoeia of English word)
+  - Merged because it is anglicism.
 - `"จักร" + "ยาน" | sewing machine + spacecraft (Bicycle)`  
-  - Meaning changes when merged.
-- `"เสื้อ" + "เชิ้ต" | shirt + shirt (button up shirt modifier)`
-  - Separate because "shirt" should be available for full text matching. The modifier will be found through bi-gram matching.
+  - Merged because new word arises from two seemingly unrelated tokens.
 - `"ตำ" + "นาน" | pound + long (legend)`
-  - Different meaning when merged.
+  - Merged because of new meaning when merged that has nothing similar to initial tokens.
 - `"ต่าง" + "หู" | different + ear (earrings)`
-  - Different meaning when merged.
+  - Merged because huge alter in meaning.
+- `"กระ" + "เป๋า" | freckles + pouch`
+  - Merged since leaving it separate would leave unwanted tokens. This merging is applicable to marketplace related tasks.
+- `"เสื้อ" + "เชิ้ต" | shirt + shirt (button up shirt)`
+  - Separate because "shirt" should be available for full text matching. The modifier will be found through bi-gram matching.
 
 ```bash
 git clone thai_tokenizer
