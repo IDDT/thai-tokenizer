@@ -26,18 +26,18 @@ It might be desirable to train own pairs to capture the specifics of the dataset
 - `"ส่ง" + "ฟรี" | free + delivery -> freedelivery`
   - Separate since merging does not change the meaning of individual words.
 - `"กาญจนา" + "ภิเษก" | kanjana + pisek = Kanajanapisek`
-  - Merged because it is a name.
-- `"แบต" + "เตอรี่" | Batt + tery = Battery`
-  - Merged because it is anglicism.
-- `"จักร" + "ยาน" | sewing machine + spacecraft (Bicycle)`  
-  - Merged because new word arises from two seemingly unrelated tokens.
-- `"ตำ" + "นาน" | pound + long (legend)`
-  - Merged because of new meaning when merged that has nothing similar to initial tokens.
-- `"ต่าง" + "หู" | different + ear (earrings)`
-  - Merged because huge alter in meaning.
-- `"กระ" + "เป๋า" | freckles + pouch`
-  - Merged since leaving it separate would leave unwanted tokens. This merging is applicable to marketplace related tasks.
-- `"เสื้อ" + "เชิ้ต" | shirt + shirt (button up shirt)`
+  - Given names should be merged.
+- `"แบต" + "เตอรี่" | batt + tery = battery`
+  - Merged because it is an anglicism.
+- `"จักร" + "ยาน" | sewing machine + spacecraft = bicycle`  
+  - Merged because the new token produces a token unrelated to the joined parts.
+- `"ตำ" + "นาน" | pound + long = legend`
+  - Same as above example.
+- `"ต่าง" + "หู" | different + ear = earrings`
+  - Merged because of significant alteration in the meaning.
+- `"กระ" + "เป๋า" | freckles + pouch = handbag`
+  - Merged because of significant alteration in meaning, additionally, the result produces a common word for everyday use.
+- `"เสื้อ" + "เชิ้ต" | shirt + _modifier_word_ = button up shirt`
   - Separate because "shirt" should be available for full text matching. The modifier will be found through bi-gram matching.
 
 ```bash
