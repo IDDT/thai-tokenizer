@@ -118,21 +118,13 @@ def merge_pair(pair:tuple, tokens:list):
     return out, pairs_incr, pairs_decr
 
 
-def merge(docs:list, index:Index, declined:Merges, accepted:Merges,
-        n_merges:int, is_interactive:bool) -> list:
+def merge(docs:list, index:Index, declined:Merges, n_merges:int) -> list:
     out, max_merges = [], n_merges
     while len(out) < n_merges:
         top_pair, proba, count = index.get_top_pair()
-        #Feedback & manual approval if in interactive mode.
+        #Feedback.
         print(f"#{len(out):04d} P:{proba * 100:.3f}%"
             f" {' '.join(top_pair)} -> {''.join(top_pair)}")
-        if is_interactive:
-            if top_pair not in accepted and top_pair not in declined:
-                if input('Merge? (default:y/n): ').strip() == 'n':
-                    declined.add(top_pair)
-                else:
-                    accepted.add(top_pair)
-                print()
 
         if top_pair in declined:
             print('Prevented merge for:', ' '.join(top_pair))
