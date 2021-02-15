@@ -23,8 +23,8 @@ tokenizer.split('เครื่องไทย') #> ['เครื่อง', '
 
 ## Training
 It might be desirable to train own pairs to capture the specifics of the dataset at hand. Figuring out which pairs should be merged can be highly subjective.
-- `"อ" + "ง" | alphabets + alphabets"`
-  - Merged because alphabets itself does not have meaning so those its merged result.
+- `"อ" + "ง" | (meaningless token) + (meaningless token) = (meaningless token)"`
+  - Merged because all 3 are meaningless tokens and the result is expected to become a part of a larger token.
 - `"ส่ง" + "ฟรี" | free + delivery -> freedelivery`
   - Separate since merging does not change the meaning of individual words.
 - `"กาญจนา" + "ภิเษก" | kanjana + pisek = Kanajanapisek`
