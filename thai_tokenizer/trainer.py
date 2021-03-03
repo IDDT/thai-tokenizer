@@ -123,11 +123,12 @@ def merge(docs:list, index:Index, declined:Merges, n_merges:int):
     while count < n_merges:
         top_pair, proba, _ = index.get_top_pair()
         #Feedback.
-        print(f"#{count:04d} P:{proba * 100:.3f}%"
-            f" {' '.join(top_pair)} -> {''.join(top_pair)}")
+        top_pair_pretty = json.dumps(top_pair, ensure_ascii=False)
+        print(f'#{count:04d} P:{proba * 100:.3f}%'
+            f" {top_pair_pretty} -> \"{''.join(top_pair)}\"")
         #If pair in declined, remove it from the index.
         if top_pair in declined:
-            print('Prevented merge for:', ' '.join(top_pair))
+            print(f'Prevented merge for: {top_pair_pretty}')
             del index[top_pair]
             continue
         #If pair not in declined, merge pairs.
