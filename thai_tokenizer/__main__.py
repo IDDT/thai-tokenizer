@@ -42,12 +42,9 @@ def main():
     assert len(index.pair_counts) == len(index.pair_indices),\
         'This is likely a bug. Pair counts dont equal to number of indices.'
 
-    print('INFO: Merging...')
-    merges_out = merge(docs, index, declined, args.n_merges)
-
-    #Save output.
+    print('INFO: Merging & saving...')
     with open(args.output, 'wt') as f:
-        for pair in merges_out:
+        for pair in merge(docs, index, declined, args.n_merges):
             f.write(json.dumps(pair, ensure_ascii=False) + '\n')
 
 

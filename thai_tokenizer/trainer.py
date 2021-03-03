@@ -118,20 +118,19 @@ def merge_pair(pair:tuple, tokens:list):
     return out, pairs_incr, pairs_decr
 
 
-def merge(docs:list, index:Index, declined:Merges, n_merges:int) -> list:
-    out, max_merges = [], n_merges
-    while len(out) < n_merges:
-        top_pair, proba, count = index.get_top_pair()
+def merge(docs:list, index:Index, declined:Merges, n_merges:int):
+    count = 0
+    while count < n_merges:
+        top_pair, proba, _ = index.get_top_pair()
         #Feedback.
-        print(f"#{len(out):04d} P:{proba * 100:.3f}%"
+        print(f"#{count:04d} P:{proba * 100:.3f}%"
             f" {' '.join(top_pair)} -> {''.join(top_pair)}")
-
+        #If pair in declined, remove it from the index.
         if top_pair in declined:
             print('Prevented merge for:', ' '.join(top_pair))
             del index[top_pair]
             continue
-        out.append(top_pair)
-
+        #If pair not in declined, merge pairs.
         for i in index.get_indices(top_pair):
             docs[i], pairs_incr, pairs_decr = merge_pair(top_pair, docs[i])
             for pair in pairs_decr:
@@ -142,5 +141,6 @@ def merge(docs:list, index:Index, declined:Merges, n_merges:int) -> list:
                 index.add_ix(pair, i)
         assert top_pair not in index, 'This is likely a bug. \
             The index should not contain the top_pair by now.'
-
-    return out
+        #Send output.
+        count += 1
+        yield top_pair
