@@ -21,11 +21,13 @@ class Tokenizer:
         a, b = pair_ix, pair_ix + 2
         return tokens[:a] + [''.join(tokens[a:b])] + tokens[b:]
 
-    def split(self, text:str) -> list:
+    def split(self, text:str, debug:bool=False) -> list:
         '''Split Thai string into a list of tokens.
         Arguments:
             text:str
                 - Contigious input of Thai characters.
+            debug:bool default=False
+                - Print merged pairs for visual debugging.
         Returns:
             List[str]
         '''
@@ -38,6 +40,8 @@ class Tokenizer:
                     ix_min, pair_ix = ix, i
             if pair_ix is not None:
                 tokens = self._merge(tokens, pair_ix=pair_ix)
+                if debug:
+                    print(tokens)
                 continue
             break
         return tokens

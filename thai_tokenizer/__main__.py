@@ -14,14 +14,9 @@ def main():
         help='Limit number of documents to load.')
     parser.add_argument('-n', '--n_merges', type=int, default=4000,
         help='Number of output merges.')
-    parser.add_argument('-i', '--interactive', action='store_true',
-        help='Approve pairs manually in interactive mode.')
     parser.add_argument('-d', '--declined', type=str,
         default='temp/bpe_merges_declined.jsonl',
         help='Declined BPE merges.')
-    parser.add_argument('-a', '--accepted', type=str,
-        default='temp/bpe_merges_accepted.jsonl',
-        help='Accepted BPE merges for interactive mode.')
     parser.add_argument('-o', '--output', type=str,
         default='temp/bpe_merges.jsonl',
         help='BPE merges output for tokenization.')
@@ -41,20 +36,15 @@ def main():
 
     print('INFO: Loading merges...')
     declined = Merges(args.declined)
-    accepted = Merges(args.accepted)
 
     print('INFO: Calculating initial stats...')
     index = Index(docs)
     assert len(index.pair_counts) == len(index.pair_indices),\
         'This is likely a bug. Pair counts dont equal to number of indices.'
 
-    print('INFO: Merging...')
-    merges_out = merge(docs, index, declined, accepted,
-        args.n_merges, args.interactive)
-
-    #Save output.
+    print('INFO: Merging & saving...')
     with open(args.output, 'wt') as f:
-        for pair in merges_out:
+        for pair in merge(docs, index, declined, args.n_merges):
             f.write(json.dumps(pair, ensure_ascii=False) + '\n')
 
 
