@@ -17,11 +17,6 @@ class Merges:
     def __len__(self):
         return len(self.merges)
 
-    def add(self, pair:tuple):
-        self.merges.add(pair)
-        with open(self.filepath, 'at') as f:
-            f.write(json.dumps(pair, ensure_ascii=False) + '\n')
-
 
 class Index:
     def __init__(self, docs):
@@ -49,7 +44,7 @@ class Index:
                 del self.pair_counts[pair]
 
     def get_indices(self, pair:tuple):
-        '''Get indices where the pair is present.
+        '''Get document indices where the pair is present.
         '''
         return tuple(self.pair_indices[pair])
 
@@ -73,9 +68,10 @@ class Index:
     def get_top_pair(self):
         '''Get pair with the most occurences.
         '''
+        # TODO: Potential area for optimization.
         top_pair = max(self.pair_counts, key=self.pair_counts.get)
         count = self.pair_counts[top_pair]
-        return top_pair, count / sum(self.pair_counts.values()), count
+        return top_pair, count / sum(self.pair_counts.values())
 
     def __delitem__(self, pair:tuple):
         '''Completely remove the pair from the index in case of skipping.
@@ -121,7 +117,7 @@ def merge_pair(pair:tuple, tokens:list):
 def merge(docs:list, index:Index, declined:Merges, n_merges:int):
     count = 0
     while count < n_merges:
-        top_pair, proba, _ = index.get_top_pair()
+        top_pair, proba = index.get_top_pair()
         #Feedback.
         top_pair_pretty = json.dumps(top_pair, ensure_ascii=False)
         print(f'#{count:04d} P:{proba * 100:.3f}%'
