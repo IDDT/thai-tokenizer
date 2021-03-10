@@ -12,7 +12,7 @@ with open(FILEPATH, 'rt') as f:
         if line:
             pairs.append(tuple(json.loads(line)))
 
-#Remove pairs with tokens resulting from mergine  of a declined pair.
+#Remove pairs with tokens resulting from mergine of a declined pair.
 merged_pairs = set(''.join(pair) for pair in pairs)
 pairs = [x for x in pairs if set(x).isdisjoint(merged_pairs)]
 
