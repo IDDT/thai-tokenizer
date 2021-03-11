@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name='thai_tokenizer',
-    version='0.2.1',
+    version='0.2.2',
     description='Fast and accurate Thai tokenization library.',
     url='https://github.com/IDDT/thai-tokenizer',
     author='Kirill Orlov',
