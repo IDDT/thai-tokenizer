@@ -7,7 +7,7 @@ README_FP = path.join(path.abspath(path.dirname(__file__)), 'README.md')
 
 setuptools.setup(
     name='thai_tokenizer',
-    version='0.2.3',
+    version='0.2.4',
     description='Fast and accurate Thai tokenization library.',
     long_description=open(README_FP, 'rt').read(),
     long_description_content_type='text/markdown',
