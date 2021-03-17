@@ -54,6 +54,7 @@ class Tokenizer:
             sep:str
                 - Character to use a separator.
         '''
-        for sub in re.findall('[\u0E00-\u0E7F]+', doc):
+        thai_substrings = re.findall('[\u0E00-\u0E7F]+', doc)
+        for sub in sorted(thai_substrings, key=len, reverse=True):
             doc = doc.replace(sub, sep.join(self.split(sub)))
         return doc
