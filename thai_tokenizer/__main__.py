@@ -25,8 +25,7 @@ def main():
 
     print('INFO: Loading documents...')
     docs = []
-    for doc in loader(args.input):
-        doc = list(segment(doc))
+    for doc in (list(segment(x)) for x in loader(args.input)):
         if len(doc) > 1:
             docs.append(doc)
         if args.limit:

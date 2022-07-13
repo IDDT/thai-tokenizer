@@ -1,23 +1,19 @@
-import os
 import json
 from .index import Index
 from .merges import Merges
 
 
+Pair = tuple[str, str]
 
-def get_pairs(tokens:list) -> set:
+
+def get_pairs(tokens:list[str]) -> set[Pair]:
     '''Get unique pairs from tokens.
     '''
     return set(zip(tokens[:-1], tokens[1:]))
 
 
-def merge_pair(pair:tuple, tokens:list):
+def merge_pair(pair:Pair, tokens:list[str]):
     '''Merge pair in tokens.
-    Arguments:
-        pair:Tuple[str]
-            - 2 tokens forming a pair.
-        tokens:List[str]
-            - Variable length list of tokens.
     '''
     pairs_before = get_pairs(tokens)
     out = tokens[:]

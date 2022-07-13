@@ -1,11 +1,14 @@
 import re
+from typing import Iterable
 from .tcc import segment
 from .data import bpe_merges
 
 
+Pair = tuple[str, str]
+
 
 class Tokenizer:
-    def __init__(self, pairs:list=bpe_merges):
+    def __init__(self, pairs:Iterable[Pair]=bpe_merges):
         self.pairs = {}
         for p, pair in enumerate(pairs):
             assert len(pair) == 2,\
@@ -15,21 +18,14 @@ class Tokenizer:
             self.pairs[tuple(pair)] = p
 
     @staticmethod
-    def _merge(tokens:list, pair_ix:int) -> list:
+    def _merge(tokens:list[str], pair_ix:int) -> list[str]:
         '''Merge list of tokens by pair index.
         '''
         a, b = pair_ix, pair_ix + 2
         return tokens[:a] + [''.join(tokens[a:b])] + tokens[b:]
 
-    def split(self, text:str, debug:bool=False) -> list:
+    def split(self, text:str, debug:bool=False) -> list[str]:
         '''Split Thai string into a list of tokens.
-        Arguments:
-            text:str
-                - Contigious input of Thai characters.
-            debug:bool default=False
-                - Print merged pairs for visual debugging.
-        Returns:
-            List[str]
         '''
         tokens = list(segment(text))
         while len(tokens) > 1:
@@ -48,11 +44,6 @@ class Tokenizer:
 
     def __call__(self, doc:str, sep:str=' ') -> str:
         '''Separate thai substrings in a mixed-language string.
-        Arguments:
-            doc:str
-                - Document with optional Thai substrings.
-            sep:str
-                - Character to use a separator.
         '''
         thai_substrings = re.findall('[\u0E00-\u0E7F]+', doc)
         for sub in sorted(thai_substrings, key=len, reverse=True):
