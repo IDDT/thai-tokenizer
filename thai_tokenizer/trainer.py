@@ -29,10 +29,9 @@ class Index:
     def incr_pair(self, pair:tuple):
         '''Increment pair counter.
         '''
-        if pair in self.pair_counts:
-            self.pair_counts[pair] += 1
-        else:
-            self.pair_counts[pair] = 1
+        if pair not in self.pair_counts:
+            self.pair_counts[pair] = 0
+        self.pair_counts[pair] += 1
 
     def decr_pair(self, pair:tuple):
         '''Decrement pair counter.
