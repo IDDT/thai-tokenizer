@@ -15,8 +15,7 @@ def main():
     parser.add_argument('-n', '--n_merges', type=int, default=4000,
         help='Number of output merges.')
     parser.add_argument('-d', '--declined', type=str,
-        default='temp/bpe_merges_declined.jsonl',
-        help='Declined BPE merges.')
+        help='Path to declined BPE merges file.')
     parser.add_argument('-o', '--output', type=str,
         default='temp/bpe_merges.jsonl',
         help='BPE merges output for tokenization.')
@@ -35,7 +34,7 @@ def main():
                 break
 
     print('INFO: Loading merges...')
-    declined = Merges(args.declined)
+    declined = Merges(args.declined) if args.declined else Merges()
 
     print('INFO: Calculating initial stats...')
     index = Index(docs)

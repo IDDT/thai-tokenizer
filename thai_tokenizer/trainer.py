@@ -4,10 +4,10 @@ import json
 
 
 class Merges:
-    def __init__(self, filepath:str):
-        self.merges, self.filepath = set(), filepath
-        if os.path.isfile(self.filepath):
-            with open(self.filepath, 'rt') as f:
+    def __init__(self, filepath:str=''):
+        self.merges = set()
+        if filepath and os.path.isfile(filepath):
+            with open(filepath, 'rt') as f:
                 for line in f:
                     self.merges.add(tuple(json.loads(line.strip())))
 
