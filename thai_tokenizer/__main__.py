@@ -2,7 +2,9 @@ import json
 import argparse
 from .tcc import segment
 from .loader import loader
-from .trainer import Merges, Index, merge
+from .index import Index
+from .merges import Merges
+from .trainer import merge
 
 
 
