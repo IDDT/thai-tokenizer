@@ -1,8 +1,7 @@
 import json
 import argparse
-from .tcc import segment
-from .loader import loader
 from .index import Index
+from .loader import load_docs, limit_iterator
 from .merges import Merges
 from .trainer import merge
 
@@ -24,15 +23,7 @@ def main():
     args = parser.parse_args()
 
     print('INFO: Loading documents...')
-    docs = []
-    for doc in (list(segment(x)) for x in loader(args.input)):
-        if len(doc) > 1:
-            docs.append(doc)
-        if args.limit:
-            if len(docs) % (args.limit // 20) == 0:
-                print(f'INFO: Loaded {len(docs) / args.limit * 100:.0f}%')
-            if len(docs) > args.limit:
-                break
+    docs = list(limit_iterator(load_docs(args.input), args.limit))
 
     print('INFO: Loading merges...')
     declined = Merges(args.declined) if args.declined else Merges()
