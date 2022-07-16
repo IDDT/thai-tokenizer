@@ -1,7 +1,7 @@
 import json
 import argparse
 from .index import Index
-from .loader import load_docs, limit_iterator
+from .loader import load_docs
 from .merges import Merges
 from .trainer import merge
 
@@ -23,7 +23,7 @@ def main():
     args = parser.parse_args()
 
     print('INFO: Loading documents...')
-    docs = list(limit_iterator(load_docs(args.input), args.limit))
+    docs = list(load_docs(args.input, args.limit))
 
     print('INFO: Loading merges...')
     declined = Merges(args.declined) if args.declined else Merges()
